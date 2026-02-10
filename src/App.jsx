@@ -5,6 +5,7 @@ import Calculator from './components/Calculator';
 import ResultCard from './components/ResultCard';
 import History from './components/History';
 import InstallBanner from './components/InstallBanner';
+import ShareModal from './components/ShareModal';
 import './App.css';
 
 const DEFAULT_VALUES = {
@@ -21,6 +22,7 @@ function App() {
   const [years, setYears] = useState(DEFAULT_VALUES.years);
   const [history, setHistory] = useState(() => getHistory());
   const [showToast, setShowToast] = useState(false);
+  const [showShare, setShowShare] = useState(false);
 
   // Asegurar que la cuota inicial no supere el precio
   const safeDownPayment = Math.min(downPayment, price);
@@ -80,7 +82,7 @@ function App() {
         onYearsChange={setYears}
       />
 
-      <ResultCard result={result} onSave={handleSave} />
+      <ResultCard result={result} onSave={handleSave} onShare={() => setShowShare(true)} />
 
       {history.length > 0 && (
         <>
@@ -98,6 +100,14 @@ function App() {
       <div className={`toast ${showToast ? 'toast--visible' : ''}`}>
         ✅ Cálculo guardado
       </div>
+
+      {showShare && (
+        <ShareModal
+          result={result}
+          inputs={{ price, downPayment: safeDownPayment, rate, years }}
+          onClose={() => setShowShare(false)}
+        />
+      )}
     </div>
   );
 }

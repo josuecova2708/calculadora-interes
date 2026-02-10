@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { formatCurrency } from '../utils/calculate';
 
-function ResultCard({ result, onSave }) {
+function ResultCard({ result, onSave, onShare }) {
     const { financedAmount, totalInterest, totalPayment, monthlyPayment, months } = result;
     const [showDetails, setShowDetails] = useState(false);
 
@@ -46,9 +46,14 @@ function ResultCard({ result, onSave }) {
                 </div>
             )}
 
-            <button className="btn btn--primary" onClick={onSave} id="save-btn">
-                💾 Guardar cálculo
-            </button>
+            <div className="result-actions">
+                <button className="btn btn--primary" onClick={onSave} id="save-btn">
+                    💾 Guardar
+                </button>
+                <button className="btn btn--primary btn--share" onClick={onShare} id="share-btn">
+                    📤 Compartir
+                </button>
+            </div>
         </div>
     );
 }
